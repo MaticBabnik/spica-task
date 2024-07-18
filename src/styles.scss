@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+@use "./theme" as theme;
+
+@include mat.core();
+
+html {
+    height: 100%;
+    @include mat.all-component-themes(theme.$theme);
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

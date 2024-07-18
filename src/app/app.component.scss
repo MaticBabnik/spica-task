@@ -1,0 +1,29 @@
+@use "@angular/material" as mat;
+@use "../theme.scss" as t;
+
+:host {
+    box-sizing: border-box;
+    min-height: 100vh;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-toolbar {
+    top: 0;
+    z-index: 1;
+    position: sticky;
+
+    color: mat.get-theme-color(t.$theme, primary, 40);
+    --mat-toolbar-container-text-color: mat.get-theme-color(t.$theme, primary, 40);
+    background: mat.get-theme-color(t.$theme, primary, 90);
+
+    .nav-active {
+        background: #ba005c1a;
+    }
+}
+
+.app-nav {
+    margin-left: 1rem;
+}

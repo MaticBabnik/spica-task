@@ -12,7 +12,6 @@ type TokenResponse = {
     providedIn: 'root'
 })
 export class AuthService {
-    protected isAuthenticated = false;
     protected authorization: string | undefined;
     protected expirationTimestamp = 0;
 
@@ -20,7 +19,7 @@ export class AuthService {
         try {
             this.loadFromLocalStorage();
         } catch (e) {
-            console.log('Clearing localStorage', e)
+            console.log('Clearing localStorage: ', (e as Error)?.message)
             localStorage.clear(); // clear state if invalid
         }
     }
@@ -54,12 +53,6 @@ export class AuthService {
         localStorage.setItem('auth_expr', this.expirationTimestamp.toString());
     }
 
-    public get Authorization() {
-        if (!this.authorization) return undefined;
-        if (this.expirationTimestamp <= Date.now()) return undefined;
-
-        return this.authorization;
-    }
 
     public async authenticate(client_id: string, client_secret: string): Promise<boolean> {
         const reqTimestamp = Date.now();
@@ -86,5 +79,28 @@ export class AuthService {
         this.updateLocalStorage();
 
         return true;
+    }
+
+    public clear() {
+        this.authorization = undefined;
+        this.expirationTimestamp = 0;
+        this.updateLocalStorage();
+    }
+
+    public get Authorization() {
+        if (!this.authorization) return undefined;
+        if (this.expirationTimestamp <= Date.now()) return undefined;
+
+        return this.authorization;
+    }
+
+    public get Authorized() {
+        return (!!this.authorization) && (this.expirationTimestamp > Date.now());
+    }
+
+    public get SessionEnd() {
+        return this.authorization ?
+            new Date(this.expirationTimestamp).toLocaleTimeString() :
+            'No session';
     }
 }

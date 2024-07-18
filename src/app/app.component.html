@@ -1,1 +1,22 @@
-<router-outlet />
+<mat-toolbar color="primary">
+    <span>spica-task</span>
+    <nav class="app-nav">
+        <a mat-button routerLinkActive="nav-active" routerLink="/settings">Settings</a>
+        <a
+            mat-button
+            routerLinkActive="nav-active"
+            [disabled]="!auth.Authorized"
+            routerLink="/users"
+            >Users</a
+        >
+        <a
+            mat-button
+            routerLinkActive="nav-active"
+            [disabled]="!auth.Authorized"
+            routerLink="/test"
+            >Abscences</a
+        >
+    </nav>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

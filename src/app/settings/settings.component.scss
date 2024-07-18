@@ -1,0 +1,63 @@
+@use "@angular/material" as mat;
+@use "../../theme.scss" as t;
+
+:host {
+    display: grid;
+    place-items: center;
+    flex: 1;
+}
+
+mat-card {
+    width: 400px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+mat-form-field {
+    padding-top: 0.5rem;
+    width: 100%;
+}
+
+.btn-login {
+    display: block;
+}
+
+.login-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card .loading {
+    z-index: 2;
+    pointer-events: all;
+    cursor: wait;
+
+    background-color: #0002;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: grid;
+    place-content: center;
+}
+
+mat-spinner {
+    transform: scale(0.5);
+}
+
+.error {
+    background-color: mat.get-theme-color(t.$theme, error, 80);
+    color: mat.get-theme-color(t.$theme, error, 30);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    border: 1px solid mat.get-theme-color(t.$theme, error, 40);
+    width: 100%;
+}

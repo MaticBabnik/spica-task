@@ -1,0 +1,19 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$rose-palette,
+        ),
+        typography: (
+            brand-family: Roboto,
+            bold-weight: 900,
+        ),
+        density: (
+            scale: -1,
+        ),
+    )
+);

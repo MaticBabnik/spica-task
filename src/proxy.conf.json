@@ -1,0 +1,7 @@
+{
+    "/connect/token": {
+        "target": "https://login.allhours.com",
+        "secure": true,
+        "changeOrigin": true
+    }
+}
