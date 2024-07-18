@@ -12,6 +12,7 @@ import { UsersService } from "./users.service";
 import { UserDataSource } from "./UserDataSource";
 import { MatDialog } from "@angular/material/dialog";
 import { CreateUser } from "./createUser/createUser.component";
+import { User } from "./User.model";
 
 @Component({
     selector: "app-users",
@@ -46,7 +47,12 @@ export class UsersComponent implements OnInit {
     lastNameQuery = new FormControl("");
 
     addUser() {
-        this.dialogService.open(CreateUser);
+        this.dialogService.open(CreateUser)
+            .afterClosed()
+            .subscribe(x => {
+                if (x)
+                    this.users.append(x);
+            });
     }
 
     ngOnInit(): void {

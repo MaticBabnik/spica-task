@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -6,9 +6,11 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatProgressBar } from "@angular/material/progress-bar";
+import { UsersService } from "../users.service";
 
 @Component({
     selector: "app-create-user",
@@ -17,6 +19,7 @@ import { MatInputModule } from "@angular/material/input";
         MatButtonModule,
         MatDialogModule,
         MatInputModule,
+        MatProgressBar,
         MatFormFieldModule,
         ReactiveFormsModule,
     ],
@@ -24,6 +27,11 @@ import { MatInputModule } from "@angular/material/input";
     styleUrl: "./createUser.component.scss",
 })
 export class CreateUser {
+    usersService = inject(UsersService);
+    dialog = inject(MatDialogRef<CreateUser>);
+    error: string | undefined = undefined;    
+    loading = false;
+
     userForm = new FormGroup({
         firstName: new FormControl("", {
             nonNullable: true,
@@ -48,5 +56,25 @@ export class CreateUser {
         const control = this.userForm.controls[controlName];
         const error = Object.keys(control.errors ?? {})[0];
         return this.errorMap[error] ?? '';
+    }
+
+    create() {
+        if (this.loading) return;
+        this.loading = true;
+
+        const u = this.userForm.value
+        this.usersService.createUser({
+            Email: u.email!,
+            FirstName: u.firstName!,
+            LastName: u.lastName!
+        }).subscribe(res => {
+            if (!res.ok) {
+                this.loading = false;
+                this.error = res.statusText;
+                return;
+            }
+
+            this.dialog.close(res.body);
+        })
     }
 }

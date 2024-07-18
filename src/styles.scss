@@ -1,15 +1,26 @@
 @use "@angular/material" as mat;
-@use "./theme" as theme;
+@use "./theme" as t;
 
 @include mat.core();
 
 html {
     height: 100%;
-    @include mat.all-component-themes(theme.$theme);
+    @include mat.all-component-themes(t.$theme);
 }
 
 body {
     height: 100%;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.app-error {
+    background-color: mat.get-theme-color(t.$theme, error, 80);
+    color: mat.get-theme-color(t.$theme, error, 30);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    border: 1px solid mat.get-theme-color(t.$theme, error, 40);
+    width: 100%;
 }

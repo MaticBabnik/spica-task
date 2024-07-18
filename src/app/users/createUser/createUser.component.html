@@ -25,9 +25,17 @@
             <mat-error> {{ getError("email") }} </mat-error>
             }
         </mat-form-field>
+
+        @if (error) {
+            <span class="app-error">
+                {{error}}
+            </span>
+        }
     </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-flat-button mat-dialog-close>Create</button>
+    <button mat-flat-button (click)="create()">Create</button>
 </mat-dialog-actions>
+
+<mat-progress-bar [class.hidden]="!loading" mode="indeterminate" />

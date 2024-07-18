@@ -29,6 +29,11 @@ export class UserDataSource extends DataSource<User> {
         this.pushUpdate();
     }
 
+    public append(newUser: User) {
+        this.data.push(newUser);
+        this.pushUpdate();
+    }
+
     protected pushUpdate() {
         if (this.firstName == '' && this.lastName == '')
             this.dataSubject.next(this.data);
