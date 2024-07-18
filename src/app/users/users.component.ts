@@ -10,6 +10,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 
 import { UsersService } from "./users.service";
 import { UserDataSource } from "./UserDataSource";
+import { MatDialog } from "@angular/material/dialog";
+import { CreateUser } from "./createUser/createUser.component";
 
 @Component({
     selector: "app-users",
@@ -26,7 +28,9 @@ import { UserDataSource } from "./UserDataSource";
     styleUrl: "./users.component.scss",
 })
 export class UsersComponent implements OnInit {
-    usersService = inject(UsersService);
+    readonly dialogService = inject(MatDialog);
+    readonly usersService = inject(UsersService);
+
     users = new UserDataSource([]);
 
     displayedColumns = [
@@ -41,14 +45,14 @@ export class UsersComponent implements OnInit {
     firstNameQuery = new FormControl("");
     lastNameQuery = new FormControl("");
 
+    addUser() {
+        this.dialogService.open(CreateUser);
+    }
+
     ngOnInit(): void {
         this.usersService.fetchAllUsers().subscribe((u) => {
             this.users.update(u);
         });
-
-        merge(this.firstNameQuery.valueChanges, this.lastNameQuery.valueChanges)
-            .pipe(debounceTime(333))
-            .subscribe((x) => console.log(x));
 
         merge(this.firstNameQuery.valueChanges, this.lastNameQuery.valueChanges)
             .pipe(debounceTime(333))
