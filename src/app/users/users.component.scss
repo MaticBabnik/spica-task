@@ -1,0 +1,48 @@
+@use "@angular/material" as mat;
+@use "../../theme.scss" as t;
+
+:host {
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    padding: 1rem 2rem;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    // align-items: center;
+    .search-icon {
+        height: 52px;
+        width: 39px;
+        box-sizing: border-box;
+        padding: 13px 0;
+        padding-left: 13px;
+    }
+}
+
+.user-table {
+    flex: 1;
+    min-height: 0;
+
+    position: relative;
+    overflow: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: mat.get-theme-color(t.$theme, primary)
+        mat.get-theme-color(t.$theme, surface);
+
+    border-radius: 0.5rem;
+
+    table {
+        width: 100%;
+
+        .header {
+            background-color: mat.get-theme-color(t.$theme, primary, 90);
+        }
+    }
+}

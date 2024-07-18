@@ -3,8 +3,8 @@
 
 :host {
     box-sizing: border-box;
-    min-height: 100vh;
-    height: 100%;
+    max-height: 100vh;
+    height: 100vh;
 
     display: flex;
     flex-direction: column;
@@ -14,6 +14,8 @@
     top: 0;
     z-index: 1;
     position: sticky;
+
+    flex-shrink: 0;
 
     color: mat.get-theme-color(t.$theme, primary, 40);
     --mat-toolbar-container-text-color: mat.get-theme-color(t.$theme, primary, 40);
