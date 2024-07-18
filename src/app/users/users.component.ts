@@ -11,7 +11,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { UsersService } from "./users.service";
 import { UserDataSource } from "./UserDataSource";
 import { MatDialog } from "@angular/material/dialog";
+
 import { CreateUser } from "./createUser/createUser.component";
+import { CreateAbsence } from "./createAbsence/createAbsence.component";
 import { User } from "./User.model";
 
 @Component({
@@ -41,6 +43,7 @@ export class UsersComponent implements OnInit {
         "phone",
         "mobile",
         "gender",
+        "actions"
     ];
 
     firstNameQuery = new FormControl("");
@@ -53,6 +56,10 @@ export class UsersComponent implements OnInit {
                 if (x)
                     this.users.append(x);
             });
+    }
+
+    addAbsence(user: User) {
+        this.dialogService.open(CreateAbsence)
     }
 
     ngOnInit(): void {

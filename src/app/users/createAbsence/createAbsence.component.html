@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Add absence</h2>
+
+<mat-dialog-content>
+    <form>
+        <mat-form-field class="wide">
+            <mat-label>Absence type</mat-label>
+            <mat-select>
+                <mat-option value="test">Test</mat-option>
+                <mat-option value="test">Test 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="wide">
+            <mat-label>Comment</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="wide">
+            <mat-label>Date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input
+                    matStartDate
+                    formControlName="start"
+                    placeholder="Start date"
+                />
+                <input
+                    matEndDate
+                    formControlName="end"
+                    placeholder="End date"
+                />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Start time</mat-label>
+            <input type="time" matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>End time</mat-label>
+            <input type="time" matInput>
+        </mat-form-field>
+        
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-flat-button (click)="(1)">Create</button>
+</mat-dialog-actions>
+
+<mat-progress-bar [class.hidden]="!loading" mode="indeterminate" />
