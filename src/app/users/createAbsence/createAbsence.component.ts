@@ -106,4 +106,37 @@ export class CreateAbsence implements OnInit {
         this.absenceDefinitions =
             await this.usersService.getAbsenceDefinitions();
     }
+
+    protected toDtoTime(date: Date, timeString: string): string {
+        return new Date(
+            date.valueOf() + this.parseTime(timeString)
+        ).toISOString();
+    }
+
+    create() {
+        if (!this.form.valid) return;
+        if (this.loading) return;
+        this.loading = true;
+
+        const a = this.form.value;
+
+        this.usersService
+            .createAbsence({
+                UserId: this.user.Id,
+                AbsenceDefinitionId: a.absenceType!,
+                Comment: a.comment ?? undefined,
+                Timestamp: new Date().toISOString(),
+                PartialTimeFrom: this.toDtoTime(a.startDate!, a.startTime!),
+                PartialTimeTo: this.toDtoTime(a.endDate!, a.endTime!),
+            })
+            .subscribe((res) => {
+                if (!res.ok) {
+                    this.loading = false;
+                    this.error = res.statusText;
+                    return;
+                }
+
+                this.dialog.close(res.body);
+            });
+    }
 }

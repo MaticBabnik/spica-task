@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Add absence to {{ user.FullName }}</h2>
 
 <mat-dialog-content>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (submit)="create()">
         <mat-form-field class="wide">
             <mat-label>Absence type</mat-label>
             <mat-select formControlName="absenceType">
@@ -72,16 +72,23 @@
             }
         </mat-form-field>
 
-        @if(form.hasError('timeBefore')) {
+        @if(form.hasError('timeBefore') || this.error) {
         <span class="app-error">
-            {{ errorMap["timeBefore"] }}
+            {{ errorMap["timeBefore"] ?? this.error }}
         </span>
         }
     </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-flat-button (click)="(1)">Create</button>
+    <button
+        mat-flat-button
+        (click)="create()"
+        disabledInteractive
+        [disabled]="!form.valid"
+    >
+        Create
+    </button>
 </mat-dialog-actions>
 
 <mat-progress-bar [class.hidden]="!loading" mode="indeterminate" />

@@ -27,15 +27,22 @@
         </mat-form-field>
 
         @if (error) {
-            <span class="app-error">
-                {{error}}
-            </span>
+        <span class="app-error">
+            {{ error }}
+        </span>
         }
     </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-flat-button (click)="create()">Create</button>
+    <button
+        mat-flat-button
+        (click)="create()"
+        disabledInteractive
+        [disabled]="!userForm.valid"
+    >
+        Create
+    </button>
 </mat-dialog-actions>
 
 <mat-progress-bar [class.hidden]="!loading" mode="indeterminate" />

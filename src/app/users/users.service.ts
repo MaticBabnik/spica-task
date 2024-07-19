@@ -5,6 +5,7 @@ import { User } from "./User.model";
 import { CreateUser } from "./createUser/createUser.dto";
 import { AbsenceDefinition } from "./AbsenceDefinition.model";
 import { firstValueFrom } from "rxjs";
+import { CreateAbsence } from "./createAbsence/createAbsence.dto";
 
 @Injectable({
     providedIn: "root",
@@ -38,5 +39,11 @@ export class UsersService {
 
         this.absenceCache = response.body;
         return this.absenceCache;
+    }
+
+    public createAbsence(absence: CreateAbsence) {
+        return this.http.post<User>(`${environment.apiUrl}/Absences`, absence, {
+            observe: "response",
+        });
     }
 }

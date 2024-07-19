@@ -59,6 +59,7 @@ export class CreateUser {
     }
 
     create() {
+        if (!this.userForm.valid) return;
         if (this.loading) return;
         this.loading = true;
 
