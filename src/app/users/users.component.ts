@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
     }
 
     addAbsence(user: User) {
-        this.dialogService.open(CreateAbsence)
+        this.dialogService.open(CreateAbsence, { data: user })
     }
 
     ngOnInit(): void {

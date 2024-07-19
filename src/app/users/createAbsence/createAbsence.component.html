@@ -1,18 +1,25 @@
-<h2 mat-dialog-title>Add absence</h2>
+<h2 mat-dialog-title>Add absence to {{ user.FullName }}</h2>
 
 <mat-dialog-content>
-    <form>
+    <form [formGroup]="form">
         <mat-form-field class="wide">
             <mat-label>Absence type</mat-label>
-            <mat-select>
-                <mat-option value="test">Test</mat-option>
-                <mat-option value="test">Test 2</mat-option>
+            <mat-select formControlName="absenceType">
+                @for (aDef of absenceDefinitions; track aDef.Id) {
+                <mat-option [value]="aDef.Id">{{ aDef.Name }}</mat-option>
+                }
             </mat-select>
+            @if (getError('absenceType')) {
+            <mat-error> {{ getError("absenceType") }} </mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field class="wide">
             <mat-label>Comment</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="comment"></textarea>
+            @if (getError('comment')) {
+            <mat-error> {{ getError("comment") }} </mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field class="wide">
@@ -20,12 +27,12 @@
             <mat-date-range-input [rangePicker]="picker">
                 <input
                     matStartDate
-                    formControlName="start"
+                    formControlName="startDate"
                     placeholder="Start date"
                 />
                 <input
                     matEndDate
-                    formControlName="end"
+                    formControlName="endDate"
                     placeholder="End date"
                 />
             </mat-date-range-input>
@@ -35,18 +42,41 @@
                 [for]="picker"
             ></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
+            @if ( getError('startDate') ?? getError('endDate') ??
+            form.errors?.['dateBefore'] ) {
+            <mat-error>
+                {{
+                    getError("startDate") ??
+                        getError("endDate") ??
+                        errorMap["dateBefore"]
+                }}
+            </mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Start time</mat-label>
-            <input type="time" matInput>
+            <input type="time" matInput formControlName="startTime" />
+            @if (getError('startTime')) {
+            <mat-error> {{ getError("startTime") }} </mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>End time</mat-label>
-            <input type="time" matInput>
+            <input type="time" matInput formControlName="endTime" />
+            @if (getError('endTime')) {
+            <mat-error>
+                {{ getError("endTime") }}
+            </mat-error>
+            }
         </mat-form-field>
-        
+
+        @if(form.hasError('timeBefore')) {
+        <span class="app-error">
+            {{ errorMap["timeBefore"] }}
+        </span>
+        }
     </form>
 </mat-dialog-content>
 
