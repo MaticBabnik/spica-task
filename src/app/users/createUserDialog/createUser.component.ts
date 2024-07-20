@@ -10,7 +10,7 @@ import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatProgressBar } from "@angular/material/progress-bar";
-import { UsersService } from "../users.service";
+import { UsersService } from "../service/users.service";
 
 @Component({
     selector: "app-create-user",
@@ -26,9 +26,9 @@ import { UsersService } from "../users.service";
     templateUrl: "./createUser.component.html",
     styleUrl: "./createUser.component.scss",
 })
-export class CreateUser {
+export class CreateUserComponent {
     usersService = inject(UsersService);
-    dialog = inject(MatDialogRef<CreateUser>);
+    dialog = inject(MatDialogRef<CreateUserComponent>);
     error: string | undefined = undefined;    
     loading = false;
 

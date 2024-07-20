@@ -17,9 +17,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
-import { UsersService } from "../users.service";
-import { User } from "../User.model";
-import { AbsenceDefinition } from "../AbsenceDefinition.model";
+import { UsersService } from "../../users/service/users.service";
+import { User } from "../../users/service/User.model";
+import { AbsenceDefinition } from "../service/AbsenceDefinition.model";
 
 @Component({
     selector: "app-create-absence",
@@ -37,9 +37,9 @@ import { AbsenceDefinition } from "../AbsenceDefinition.model";
     templateUrl: "./createAbsence.component.html",
     styleUrl: "./createAbsence.component.scss",
 })
-export class CreateAbsence implements OnInit {
+export class CreateAbsenceComponent implements OnInit {
     usersService = inject(UsersService);
-    dialog = inject(MatDialogRef<CreateAbsence>);
+    dialog = inject(MatDialogRef<CreateAbsenceComponent>);
     user: User = inject(MAT_DIALOG_DATA);
     error: string | undefined = undefined;
     loading = false;

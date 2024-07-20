@@ -1,6 +1,6 @@
-import { User } from "./User.model";
+import { User } from "./service/User.model";
 import { BehaviorSubject, Observable } from "rxjs"
-import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { DataSource } from "@angular/cdk/collections";
 
 export class UserDataSource extends DataSource<User> {
     protected dataSubject: BehaviorSubject<User[]>;
@@ -54,11 +54,11 @@ export class UserDataSource extends DataSource<User> {
         this.dataSubject.next(filtered);
     }
 
-    public override connect(collectionViewer: CollectionViewer): Observable<readonly User[]> {
+    public override connect(): Observable<readonly User[]> {
         return this.dataSubject.asObservable();
     }
 
-    public override disconnect(collectionViewer: CollectionViewer): void {
+    public override disconnect(): void {
         this.dataSubject.complete();
     }
 }

@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, RedirectCommand, Router } from '@angular/router';
 import { AuthService } from "./auth.service"
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = () => {
     const isAuth = inject(AuthService).Authorized;
 
     if (isAuth) return true;

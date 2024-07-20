@@ -2,32 +2,27 @@ import { Component, inject, Input, OnInit } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 
 import { MatIconModule } from "@angular/material/icon";
-import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { UsersService } from "../users/users.service";
+import { UsersService } from "../users/service/users.service";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { Absence } from "./Absence.model";
-import { MatCardModule } from "@angular/material/card";
+import { Absence } from "./service/Absence.model";
 import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
-import { FullNamePipe } from "./FullName.pipe";
-import { DateRangePipe } from "./DateRange.pipe";
+import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
 
 @Component({
     selector: "app-absences",
     standalone: true,
     imports: [
-        FullNamePipe,
-        DateRangePipe,
         MatInputModule,
         MatIconModule,
         MatButtonModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatDatepickerModule,
-        MatCardModule,
+        AbsenceCardComponent
     ],
     templateUrl: "./absences.component.html",
     styleUrl: "./absences.component.scss",
@@ -63,7 +58,6 @@ export class AbsencesComponent implements OnInit {
     absences: Absence[] = [];
 
     // Todo(mbabnik): loading indicator
-
     refresh() {}
 
     async ngOnInit() {

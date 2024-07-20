@@ -1,4 +1,4 @@
-export type CreateAbsence = {
+export interface CreateAbsence {
     UserId: string,
     AbsenceDefinitionId: string,
     Comment?: string,

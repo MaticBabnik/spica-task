@@ -1,4 +1,4 @@
-export type AbsenceDefinition = {
+export interface AbsenceDefinition {
     Id: string;
     Name: string;
     IntegrationId: number;
@@ -10,4 +10,4 @@ export type AbsenceDefinition = {
     Fraction: number;
     IconId: string;
     IsActive: boolean;
-};
+}

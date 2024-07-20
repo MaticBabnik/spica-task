@@ -1,12 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
 import { User } from "./User.model";
-import { CreateUser } from "./createUser/createUser.dto";
-import { AbsenceDefinition } from "./AbsenceDefinition.model";
+import { CreateUser } from "./createUser.dto";
+import { AbsenceDefinition } from "../../absences/service/AbsenceDefinition.model";
 import { firstValueFrom } from "rxjs";
-import { CreateAbsence } from "./createAbsence/createAbsence.dto";
-import { Absence } from "../absences/Absence.model";
+import { CreateAbsence } from "../../absences/service/createAbsence.dto";
+import { Absence } from "../../absences/service/Absence.model";
 
 interface SearchableAbsence extends Absence {
     from: number;

@@ -33,7 +33,7 @@ mat-form-field {
 }
 
 .login-card .loading {
-    z-index: 2;
+    z-index: 10;
     pointer-events: all;
     cursor: wait;
 

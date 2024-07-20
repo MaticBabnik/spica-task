@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Absence } from "./Absence.model";
+import { Absence } from "../service/Absence.model";
 
 @Pipe({
     name: "fullName",

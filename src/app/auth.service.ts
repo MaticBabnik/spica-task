@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment'
 
-type TokenResponse = {
+interface TokenResponse {
     access_token: string,
     expires_in: number,
     token_type: string,

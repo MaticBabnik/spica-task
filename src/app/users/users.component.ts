@@ -8,13 +8,13 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 
-import { UsersService } from "./users.service";
+import { UsersService } from "./service/users.service";
 import { UserDataSource } from "./UserDataSource";
 import { MatDialog } from "@angular/material/dialog";
 
-import { CreateUser } from "./createUser/createUser.component";
-import { CreateAbsence } from "./createAbsence/createAbsence.component";
-import { User } from "./User.model";
+import { CreateUserComponent } from "./createUserDialog/createUser.component";
+import { CreateAbsenceComponent } from "../absences/createAbsenceDialog/createAbsence.component";
+import { User } from "./service/User.model";
 
 @Component({
     selector: "app-users",
@@ -43,23 +43,23 @@ export class UsersComponent implements OnInit {
         "phone",
         "mobile",
         "gender",
-        "actions"
+        "actions",
     ];
 
     firstNameQuery = new FormControl("");
     lastNameQuery = new FormControl("");
 
     addUser() {
-        this.dialogService.open(CreateUser)
+        this.dialogService
+            .open(CreateUserComponent)
             .afterClosed()
-            .subscribe(x => {
-                if (x)
-                    this.users.append(x);
+            .subscribe((x) => {
+                if (x) this.users.append(x);
             });
     }
 
     addAbsence(user: User) {
-        this.dialogService.open(CreateAbsence, { data: user })
+        this.dialogService.open(CreateAbsenceComponent, { data: user });
     }
 
     // Todo(mbabnik): loading indicator

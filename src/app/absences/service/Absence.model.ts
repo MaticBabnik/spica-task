@@ -1,4 +1,4 @@
-export type Absence = {
+export interface Absence {
     Id: string;
     UserId: string;
     GroupId: string;
@@ -26,4 +26,4 @@ export type Absence = {
     IsModified: boolean;
     ModifiedByUser?: string;
     AbsenceDefinitionType: number;
-};
+}
