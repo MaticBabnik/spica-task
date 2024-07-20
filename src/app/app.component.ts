@@ -1,30 +1,21 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from './settings/auth.service';
+import { RouterModule } from "@angular/router";
+import { MatButtonModule } from "@angular/material/button";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { Component, inject } from "@angular/core";
+
+import { AuthService } from "./settings/auth.service";
 
 @Component({
-    selector: 'app-root',
+    selector: "app-root",
     standalone: true,
-    imports: [RouterOutlet,
+    imports: [
+        RouterModule,
+        MatButtonModule,
         MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatButtonModule,
-        RouterLink,
-        RouterLinkActive
     ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+    templateUrl: "./app.component.html",
+    styleUrl: "./app.component.scss",
 })
 export class AppComponent {
     auth = inject(AuthService);
-    title = 'spica-task';
-
 }

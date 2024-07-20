@@ -1,8 +1,9 @@
-import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { AuthService } from "./auth.service";
-import { catchError, throwError } from "rxjs";
 import { Router } from "@angular/router";
+import { catchError, throwError } from "rxjs";
+import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
+
+import { AuthService } from "./auth.service";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const auth = inject(AuthService);
@@ -18,7 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log('Got 401 clearing session')
+            console.log("Got 401 clearing session");
             if (error.status === 401) {
                 auth.clear();
                 router.navigate(["/settings"]);

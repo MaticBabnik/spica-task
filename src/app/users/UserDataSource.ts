@@ -1,21 +1,21 @@
-import { User } from "./service/User.model";
-import { BehaviorSubject, Observable } from "rxjs"
 import { DataSource } from "@angular/cdk/collections";
+import { BehaviorSubject, Observable } from "rxjs";
+
+import { User } from "./service/User.model";
 
 export class UserDataSource extends DataSource<User> {
     protected dataSubject: BehaviorSubject<User[]>;
+    protected firstName = "";
+    protected lastName = "";
 
     public constructor(protected data: User[]) {
         super();
         this.dataSubject = new BehaviorSubject(data);
     }
 
-    protected firstName = ''
-    protected lastName = '';
-
     public updateQuery(first: string, last: string) {
-        first = first.toLocaleLowerCase().trim()
-        last = last.toLocaleLowerCase().trim()
+        first = first.toLocaleLowerCase().trim();
+        last = last.toLocaleLowerCase().trim();
 
         if (first == this.firstName && last == this.lastName) return;
 
@@ -35,20 +35,21 @@ export class UserDataSource extends DataSource<User> {
     }
 
     protected pushUpdate() {
-        if (this.firstName == '' && this.lastName == '')
+        if (this.firstName == "" && this.lastName == "")
             this.dataSubject.next(this.data);
 
-        const f = this.firstName, l = this.lastName;
+        const f = this.firstName,
+            l = this.lastName;
 
         const filtered = this.data.filter(({ FirstName, LastName }) => {
-            if (f != '') {
+            if (f != "") {
                 if (!FirstName.toLocaleLowerCase().includes(f)) return false;
             }
-            if (l != '') {
+            if (l != "") {
                 if (!LastName.toLocaleLowerCase().includes(l)) return false;
             }
 
-            return true
+            return true;
         });
 
         this.dataSubject.next(filtered);

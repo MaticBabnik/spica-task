@@ -1,11 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import {
-    AbstractControl,
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import * as F from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import {
     MAT_DIALOG_DATA,
@@ -21,6 +15,8 @@ import { User } from "../../users/service/User.model";
 import { AbsenceDefinition } from "../service/AbsenceDefinition.model";
 import { AbsencesService } from "../service/absences.service";
 
+type mbyDate = Date | null;
+
 @Component({
     selector: "app-create-absence",
     standalone: true,
@@ -32,7 +28,7 @@ import { AbsencesService } from "../service/absences.service";
         MatButtonModule,
         MatFormFieldModule,
         MatDatepickerModule,
-        ReactiveFormsModule,
+        F.ReactiveFormsModule,
     ],
     templateUrl: "./createAbsence.component.html",
     styleUrl: "./createAbsence.component.scss",
@@ -41,23 +37,21 @@ export class CreateAbsenceComponent implements OnInit {
     absencesService = inject(AbsencesService);
     dialog = inject(MatDialogRef<CreateAbsenceComponent>);
     user: User = inject(MAT_DIALOG_DATA);
-    error: string | undefined = undefined;
-    loading = false;
 
     absenceDefinitions: AbsenceDefinition[] = [];
 
-    form = new FormGroup(
+    form = new F.FormGroup(
         {
-            absenceType: new FormControl("", Validators.required),
-            comment: new FormControl(""),
-            startDate: new FormControl<Date | null>(null, Validators.required),
-            endDate: new FormControl<Date | null>(null, Validators.required),
-            startTime: new FormControl("", Validators.required),
-            endTime: new FormControl("", Validators.required),
+            comment: new F.FormControl(""),
+            endTime: new F.FormControl("", F.Validators.required),
+            startTime: new F.FormControl("", F.Validators.required),
+            absenceType: new F.FormControl("", F.Validators.required),
+            startDate: new F.FormControl<mbyDate>(null, F.Validators.required),
+            endDate: new F.FormControl<mbyDate>(null, F.Validators.required),
         },
         {
             validators: [
-                (c: AbstractControl) => {
+                (c: F.AbstractControl) => {
                     // validates dates and times
                     const form = c.getRawValue();
                     let start = (form.startDate as Date | null)?.valueOf(),
@@ -76,6 +70,9 @@ export class CreateAbsenceComponent implements OnInit {
             ],
         }
     );
+
+    error: string | undefined = undefined;
+    loading = false;
 
     errorMap: Record<string, string | undefined> = {
         required: "Field is required",

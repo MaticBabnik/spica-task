@@ -1,18 +1,18 @@
+import { Location } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { ActivatedRoute } from "@angular/router";
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 import { Component, inject, Input, OnInit } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatButtonModule } from "@angular/material/button";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { UsersService } from "../users/service/users.service";
-import { MatDatepickerModule } from "@angular/material/datepicker";
 import { Absence } from "./service/Absence.model";
-import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
-import { LoadingComponent } from "../common/loading.component";
+import { UsersService } from "../users/service/users.service";
 import { AbsencesService } from "./service/absences.service";
+import { LoadingComponent } from "../common/loading.component";
+import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
 
 @Component({
     selector: "app-absences",
@@ -31,10 +31,15 @@ import { AbsencesService } from "./service/absences.service";
     styleUrl: "./absences.component.scss",
 })
 export class AbsencesComponent implements OnInit {
-    readonly absencesService = inject(AbsencesService)
-    readonly usersService = inject(UsersService);
-    readonly route = inject(ActivatedRoute);
-    readonly location = inject(Location);
+    route = inject(ActivatedRoute);
+    location = inject(Location);
+    absencesService = inject(AbsencesService);
+
+    dateQuery = new FormControl(this.today());
+
+    absences: Absence[] = [];
+    loading = false;
+    error: string | undefined = undefined;
 
     @Input()
     set date(d: string | undefined) {
@@ -57,11 +62,6 @@ export class AbsencesComponent implements OnInit {
         const d = date.getDate();
         return `${m}-${d}-${y}`;
     }
-
-    dateQuery = new FormControl(this.today());
-    absences: Absence[] = [];
-    loading = false;
-    error: string | undefined = undefined;
 
     async fetchAbsences(forceFetch = false) {
         if (this.loading) return;

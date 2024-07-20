@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
+
 import { Absence } from "../service/Absence.model";
 
 @Pipe({
@@ -14,17 +15,17 @@ export class DateRangePipe implements PipeTransform {
     fullLocaleString(date: Date) {
         return date.toLocaleTimeString(undefined, {
             year: "numeric",
-            day: '2-digit',
+            day: "2-digit",
             month: "short",
-            hour: 'numeric',
-            minute: '2-digit'
+            hour: "numeric",
+            minute: "2-digit",
         });
     }
 
     timeString(date: Date) {
         return date.toLocaleTimeString(undefined, {
-            hour: 'numeric',
-            minute: '2-digit'
+            hour: "numeric",
+            minute: "2-digit",
         });
     }
 
@@ -45,9 +46,13 @@ export class DateRangePipe implements PipeTransform {
         const dstrEnd = end.toLocaleDateString();
 
         if (dstrStart == dstrEnd) {
-            return `${dstrStart} ${this.timeString(start)} - ${this.timeString(end)}`;
+            return `${dstrStart} ${this.timeString(start)} - ${this.timeString(
+                end
+            )}`;
         }
 
-        return `${this.fullLocaleString(start)} - ${this.fullLocaleString(end)}`
+        return `${this.fullLocaleString(start)} - ${this.fullLocaleString(
+            end
+        )}`;
     }
 }
