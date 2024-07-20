@@ -15,13 +15,17 @@
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    // align-items: center;
+
     .search-icon {
         height: 52px;
         width: 39px;
         box-sizing: border-box;
         padding: 13px 0;
         padding-left: 13px;
+    }
+
+    .refresh-button {
+        margin: 10px;
     }
 }
 

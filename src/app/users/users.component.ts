@@ -62,6 +62,14 @@ export class UsersComponent implements OnInit {
         this.dialogService.open(CreateAbsence, { data: user })
     }
 
+    // Todo(mbabnik): loading indicator
+
+    refresh() {
+        this.usersService.fetchAllUsers().subscribe((u) => {
+            this.users.update(u);
+        });
+    }
+
     ngOnInit(): void {
         this.usersService.fetchAllUsers().subscribe((u) => {
             this.users.update(u);

@@ -1,22 +1,33 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
-import { UsersComponent } from "./users/users.component"
-import { SettingsComponent } from "./settings/settings.component"
-import { authGuard } from "./auth.guard"
+import { authGuard } from "./auth.guard";
+import { UsersComponent } from "./users/users.component";
+import { AbsencesComponent } from "./absences/absences.component";
+import { SettingsComponent } from "./settings/settings.component";
 
 export const routes: Routes = [
     {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'settings'
+        path: "",
+        pathMatch: "full",
+        redirectTo: "settings",
     },
     {
-        path: 'settings',
-        component: SettingsComponent
+        path: "settings",
+        component: SettingsComponent,
     },
     {
-        path: 'users',
+        path: "users",
         component: UsersComponent,
-        canActivate: [authGuard]
-    }
+        canActivate: [authGuard],
+    },
+    {
+        path: "absences",
+        component: AbsencesComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "absences/:date",
+        component: AbsencesComponent,
+        canActivate: [authGuard],
+    },
 ];

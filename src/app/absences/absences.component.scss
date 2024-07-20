@@ -1,0 +1,49 @@
+@use "@angular/material" as mat;
+@use "../../theme.scss" as t;
+
+:host {
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    padding: 1rem 2rem;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 0.5rem;
+    position: relative;
+
+    .refresh-button {
+        position: absolute;
+        right: 0;
+        margin: 10px;
+    }
+}
+
+.user-table {
+    flex: 1;
+    min-height: 0;
+
+    position: relative;
+    overflow: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: mat.get-theme-color(t.$theme, primary)
+        mat.get-theme-color(t.$theme, surface);
+
+    border-radius: 0.5rem;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    padding: 1rem;
+    gap: 0.5rem;
+    align-content: start;
+    align-items: stretch;
+    justify-items: stretch;
+    justify-content: stretch;
+}
