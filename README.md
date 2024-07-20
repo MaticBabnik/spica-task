@@ -1,15 +1,14 @@
 # SpicaTask
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+## Running
 
-## Development server
+```bash
+pnpm i # install packages with pnpm 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+pnpm start # start local server
+```
 
-## Code scaffolding
+## Notes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- The login API does not allow CORS, I set up a proxy for development mode.
+- The date params on `GET /api/v1/Absences` don't work as I expected, filtering is done on the frontend :(

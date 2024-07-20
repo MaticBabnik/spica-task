@@ -17,9 +17,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
-import { UsersService } from "../../users/service/users.service";
 import { User } from "../../users/service/User.model";
 import { AbsenceDefinition } from "../service/AbsenceDefinition.model";
+import { AbsencesService } from "../service/absences.service";
 
 @Component({
     selector: "app-create-absence",
@@ -38,7 +38,7 @@ import { AbsenceDefinition } from "../service/AbsenceDefinition.model";
     styleUrl: "./createAbsence.component.scss",
 })
 export class CreateAbsenceComponent implements OnInit {
-    usersService = inject(UsersService);
+    absencesService = inject(AbsencesService);
     dialog = inject(MatDialogRef<CreateAbsenceComponent>);
     user: User = inject(MAT_DIALOG_DATA);
     error: string | undefined = undefined;
@@ -104,7 +104,7 @@ export class CreateAbsenceComponent implements OnInit {
 
     async ngOnInit() {
         this.absenceDefinitions =
-            await this.usersService.getAbsenceDefinitions();
+            await this.absencesService.getAbsenceDefinitions();
     }
 
     protected toDtoTime(date: Date, timeString: string): string {
@@ -120,7 +120,7 @@ export class CreateAbsenceComponent implements OnInit {
 
         const a = this.form.value;
 
-        this.usersService
+        this.absencesService
             .createAbsence({
                 UserId: this.user.Id,
                 AbsenceDefinitionId: a.absenceType!,

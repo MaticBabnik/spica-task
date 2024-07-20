@@ -19,7 +19,7 @@
     <app-loading />
     } @if (error) {
     <div class="error">{{ error }}</div>
-    } @else if (absences.length == 0) {
+    } @else if (absences.length === 0) {
     <div>No absences</div>
     } @else { @for (absence of absences; track absence.Id) {
     <app-absence-card [absence]="absence" />

@@ -14,7 +14,7 @@ interface SearchableAbsence extends Absence {
 @Injectable({
     providedIn: "root",
 })
-export class UsersService {
+export class AbsencesService {
     http = inject(HttpClient);
 
     protected absenceDefCache: AbsenceDefinition[] | undefined;
@@ -38,17 +38,21 @@ export class UsersService {
     protected absenceCache: SearchableAbsence[] | undefined;
 
     public createAbsence(absence: CreateAbsence) {
-        return this.http.post<Absence>(`${environment.apiUrl}/Absences`, absence, {
-            observe: "response",
-        });
+        return this.http.post<Absence>(
+            `${environment.apiUrl}/Absences`,
+            absence,
+            {
+                observe: "response",
+            }
+        );
     }
 
     // the date params on the query seem to search based on creation date,
     // not the actual time of absence, because of that i have to fetch the whole
     // list and do the searching here.
     // potential improvement: move to ServiceWorker
-    protected async getAbsences(): Promise<SearchableAbsence[]> {
-        if (this.absenceCache) return this.absenceCache;
+    protected async getAbsences(force = false): Promise<SearchableAbsence[]> {
+        if (this.absenceCache && !force) return this.absenceCache;
 
         const response = await firstValueFrom(
             this.http.get<Absence[]>(`${environment.apiUrl}/Absences`, {
@@ -69,11 +73,15 @@ export class UsersService {
         return this.absenceCache;
     }
 
-    public async filteredAbsences(fromD: Date, toD: Date): Promise<Absence[]> {
+    public async filteredAbsences(
+        fromD: Date,
+        toD: Date,
+        force = false
+    ): Promise<Absence[]> {
         const qfrom = fromD.valueOf(),
             qto = toD.valueOf();
 
-        const abs = await this.getAbsences();
+        const abs = await this.getAbsences(force);
         return abs.filter(({ from, to }) => {
             if (from == -1 && to == -1) return false; //no date info
             else if (from == -1) return to >= qfrom; // no start date

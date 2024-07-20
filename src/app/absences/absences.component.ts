@@ -12,6 +12,7 @@ import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
 import { LoadingComponent } from "../common/loading.component";
+import { AbsencesService } from "./service/absences.service";
 
 @Component({
     selector: "app-absences",
@@ -30,6 +31,7 @@ import { LoadingComponent } from "../common/loading.component";
     styleUrl: "./absences.component.scss",
 })
 export class AbsencesComponent implements OnInit {
+    readonly absencesService = inject(AbsencesService)
     readonly usersService = inject(UsersService);
     readonly route = inject(ActivatedRoute);
     readonly location = inject(Location);
@@ -61,9 +63,6 @@ export class AbsencesComponent implements OnInit {
     loading = false;
     error: string | undefined = undefined;
 
-    // Todo(mbabnik): loading indicator
-    refresh() {}
-
     async fetchAbsences(forceFetch = false) {
         if (this.loading) return;
         if (!this.dateQuery.value) return;
@@ -73,7 +72,7 @@ export class AbsencesComponent implements OnInit {
             this.dateQuery.value.valueOf() + 24 * 60 * 60 * 1000
         );
 
-        this.usersService
+        this.absencesService
             .filteredAbsences(this.dateQuery.value, nextDay, forceFetch)
             .then((x) => {
                 this.loading = false;
@@ -84,7 +83,7 @@ export class AbsencesComponent implements OnInit {
     async ngOnInit() {
         this.fetchAbsences();
 
-        this.dateQuery.valueChanges.subscribe((x) => {
+        this.dateQuery.valueChanges.subscribe(() => {
             this.fetchAbsences();
         });
     }
