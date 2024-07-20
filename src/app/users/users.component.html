@@ -15,7 +15,7 @@
 
     <div style="flex: 1"></div>
 
-    <button class="refresh-button" mat-icon-button (click)="refresh()">
+    <button class="refresh-button" mat-icon-button (click)="fetchUsers()">
         <mat-icon>refresh</mat-icon>
     </button>
 
@@ -25,6 +25,11 @@
 </div>
 
 <section class="user-table mat-elevation-z8">
+    @if (loading) { 
+        <app-loading />
+    } @if (error) {
+    <div class="error">{{ error }}</div>
+    } @else {
     <table mat-table [dataSource]="users">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Full Name</th>
@@ -84,4 +89,5 @@
             class="row"
         ></tr>
     </table>
+    }
 </section>

@@ -1,7 +1,5 @@
 <div class="search">
-
     <mat-form-field appearance="outline">
-
         <mat-label>Choose a date</mat-label>
         <input matInput [formControl]="dateQuery" [matDatepicker]="picker" />
         <mat-datepicker-toggle
@@ -11,13 +9,19 @@
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <button class="refresh-button" mat-icon-button (click)="refresh()">
+    <button class="refresh-button" mat-icon-button (click)="fetchAbsences(true)">
         <mat-icon>refresh</mat-icon>
     </button>
 </div>
 
 <section class="user-table mat-elevation-z8">
-    @for (absence of absences; track absence.Id) {
-        <app-absence-card [absence]="absence"/>
-    }
+    @if (loading) {
+    <app-loading />
+    } @if (error) {
+    <div class="error">{{ error }}</div>
+    } @else if (absences.length == 0) {
+    <div>No absences</div>
+    } @else { @for (absence of absences; track absence.Id) {
+    <app-absence-card [absence]="absence" />
+    } }
 </section>

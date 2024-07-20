@@ -20,7 +20,9 @@ export class UsersService {
     http = inject(HttpClient);
 
     public fetchAllUsers() {
-        return this.http.get<User[]>(`${environment.apiUrl}/Users`);
+        return this.http.get<User[]>(`${environment.apiUrl}/Users`, {
+            observe: "response",
+        });
     }
 
     public createUser(user: CreateUser) {
@@ -59,8 +61,10 @@ export class UsersService {
     // not the actual time of absence, because of that i have to fetch the whole
     // list and do the searching here.
     // potential improvement: move to ServiceWorker
-    protected async getAbsences(): Promise<SearchableAbsence[]> {
-        if (this.absenceCache) return this.absenceCache;
+    protected async getAbsences(
+        forceFetch = false
+    ): Promise<SearchableAbsence[]> {
+        if (this.absenceCache && !forceFetch) return this.absenceCache;
 
         const response = await firstValueFrom(
             this.http.get<Absence[]>(`${environment.apiUrl}/Absences`, {
@@ -81,11 +85,15 @@ export class UsersService {
         return this.absenceCache;
     }
 
-    public async filteredAbsences(fromD: Date, toD: Date): Promise<Absence[]> {
+    public async filteredAbsences(
+        fromD: Date,
+        toD: Date,
+        forceFetch = false
+    ): Promise<Absence[]> {
         const qfrom = fromD.valueOf(),
             qto = toD.valueOf();
 
-        const abs = await this.getAbsences();
+        const abs = await this.getAbsences(forceFetch);
         return abs.filter(({ from, to }) => {
             if (from == -1 && to == -1) return false; //no date info
             else if (from == -1) return to >= qfrom; // no start date

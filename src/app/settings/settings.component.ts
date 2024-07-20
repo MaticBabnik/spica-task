@@ -4,10 +4,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCard, MatCardContent, MatCardTitle, MatCardHeader, MatCardActions } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 import { FormControl } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from './auth.service';
+import { LoadingComponent } from '../common/loading.component';
 
 @Component({
     selector: 'app-settings',
@@ -22,7 +22,7 @@ import { AuthService } from '../auth.service';
         MatCardContent,
         MatCardHeader,
         MatCardTitle,
-        MatProgressSpinner,
+        LoadingComponent
     ],
     templateUrl: './settings.component.html',
     styleUrl: './settings.component.scss'

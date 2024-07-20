@@ -11,6 +11,7 @@ import { Absence } from "./service/Absence.model";
 import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
+import { LoadingComponent } from "../common/loading.component";
 
 @Component({
     selector: "app-absences",
@@ -22,7 +23,8 @@ import { AbsenceCardComponent } from "./absenceCard/absenceCard.component";
         MatFormFieldModule,
         ReactiveFormsModule,
         MatDatepickerModule,
-        AbsenceCardComponent
+        AbsenceCardComponent,
+        LoadingComponent,
     ],
     templateUrl: "./absences.component.html",
     styleUrl: "./absences.component.scss",
@@ -56,31 +58,34 @@ export class AbsencesComponent implements OnInit {
 
     dateQuery = new FormControl(this.today());
     absences: Absence[] = [];
+    loading = false;
+    error: string | undefined = undefined;
 
     // Todo(mbabnik): loading indicator
     refresh() {}
 
-    async ngOnInit() {
+    async fetchAbsences(forceFetch = false) {
+        if (this.loading) return;
+        if (!this.dateQuery.value) return;
+        this.loading = true;
+
         const nextDay = new Date(
-            this.dateQuery.value!.valueOf() + 24 * 60 * 60 * 1000
+            this.dateQuery.value.valueOf() + 24 * 60 * 60 * 1000
         );
 
-        await this.usersService
-            .filteredAbsences(this.dateQuery.value!, nextDay)
+        this.usersService
+            .filteredAbsences(this.dateQuery.value, nextDay, forceFetch)
             .then((x) => {
-                this.absences = x; //todo: errors; loading
+                this.loading = false;
+                this.absences = x;
             });
+    }
+
+    async ngOnInit() {
+        this.fetchAbsences();
 
         this.dateQuery.valueChanges.subscribe((x) => {
-            if (!x) return;
-            const r = this.toRouterParam(x);
-            this.location.replaceState(`/absences/${r}`);
-
-            const nextDay = new Date(x.valueOf() + 24 * 60 * 60 * 1000);
-
-            this.usersService.filteredAbsences(x, nextDay).then((y) => {
-                this.absences = y; //todo: errors; loading
-            });
+            this.fetchAbsences();
         });
     }
 }

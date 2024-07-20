@@ -31,23 +31,3 @@ mat-form-field {
     position: relative;
     overflow: hidden;
 }
-
-.login-card .loading {
-    z-index: 10;
-    pointer-events: all;
-    cursor: wait;
-
-    background-color: #0002;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    display: grid;
-    place-content: center;
-}
-
-mat-spinner {
-    transform: scale(0.5);
-}

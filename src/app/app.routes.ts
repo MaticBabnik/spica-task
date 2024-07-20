@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 
-import { authGuard } from "./auth.guard";
+import { authGuard } from "./settings/auth.guard";
 import { UsersComponent } from "./users/users.component";
 import { AbsencesComponent } from "./absences/absences.component";
 import { SettingsComponent } from "./settings/settings.component";

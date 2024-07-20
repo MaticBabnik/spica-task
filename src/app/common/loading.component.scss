@@ -1,0 +1,36 @@
+@use "@angular/material" as mat;
+@use "../../theme.scss" as t;
+
+:host {
+    z-index: 1000;
+    pointer-events: all;
+    cursor: wait;
+    background-color: rgba(
+        mat.get-theme-color(t.$theme, secondary, 70),
+        0.5
+    );
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: grid;
+    place-content: center;
+
+    backdrop-filter: blur(3px);
+    animation: fadein ease 200ms;
+
+    mat-spinner {
+        transform: scale(0.5);
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
